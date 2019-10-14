@@ -1,0 +1,28 @@
+Actividad 1 inyección:
+
+agregar al final uno, 1, [ 1,1,1,1,1]
+agregar al final dos, 2, [2,2,2,2,2]
+agregar al final tres, 3, [3,3,3,3,3]
+agregar al final cuatro, 4, [4,4,4,4,4]
+agregar al final cinco, 5, [5,5,5,5,5]
+agregar al final seis, 6, [6,6,6,6,6]
+(mostrar contenido archivo)
+agregar al inicio cero, 0, [0,0,0,0,0]
+intentar modificar a 99
+intentar eliminar a 99
+modificar arreglo de 2 a [11,11,11,11,11]
+intentar modificar entero de 1 a 3
+modificar entero de 1 a 11
+(mostrar archivo)
+cerrar aplicación
+ejecutar aplicación
+mostrar todos
+eliminar 0
+eliminar 6
+eliminar 3
+intentar eliminar 1
+insertar al final uno, 1, [1,1,1,1,1]
+eliminar 5
+eliminar 4
+mostrar todos
+(mostrar archivo)

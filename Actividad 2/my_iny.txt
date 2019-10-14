@@ -1,0 +1,19 @@
+1
+1
+1
+casa
+1
+Perro
+0
+1
+1
+2
+Otro objeto
+3
+uno
+1
+dos
+0
+tres
+1
+6
