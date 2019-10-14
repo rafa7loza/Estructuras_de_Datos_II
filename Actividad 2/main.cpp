@@ -49,13 +49,19 @@ int main(){
           cin >> aux;
           switch (aux) {
             case 1:{
+              vector<int> keys = findKeys(FILENAME);
               a = createObject();
-              appendToFile(a, FILENAME);
+              if(!existKey(a.getPK(), keys)){
+                appendToFile(a, FILENAME);
+              }
               break;
             }
             case 2:{
+              vector<int> keys = findKeys(FILENAME);
               a = createObject();
-              appendBeginOfFile(a);
+              if(!existKey(a.getPK(), keys)){
+                appendBeginOfFile(a);
+              }
               break;
             }
             default: {
@@ -168,7 +174,15 @@ ClassA createObject(){
     cout << "Set primary key: ";
     cin >> pk;
     if(existKey(pk, keys)){
-      cout << "This primary key already exists, please try another." << endl;
+      int option;
+      cout << "This primary key already exists." << endl
+        << "1) Try another key. " << endl
+        << "2) Cancel the object inertion." << endl
+        << "Select an option: ";
+      cin >> option;
+      if(option == 2){
+        return a;
+      }
     }else break;
   }
   cout << "Set the string: ";
@@ -203,12 +217,13 @@ void printObject(ClassA obj){
 }
 
 void appendToFile(ClassA obj, string filename){
+
   ofstream fout;
   ClassB *b;
   b = new ClassB[MAX];
   b = obj.getClassBArr();
   string str = obj.getString();
-  int pk = obj.getPK(), arrSize = obj.getArrSize(),  lng = str.length();
+  int pk = obj.getPK(), arrSize = obj.getArrSize(), lng = str.length();
   int objectSize, i, bSize=0;
 
   if(fileExists(filename)){
