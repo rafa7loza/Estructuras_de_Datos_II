@@ -2,6 +2,8 @@
 
 #include "Alumno.h"
 #include "Menu.h"
+#include "Buffer.h"
+// #include "Index.h"
 #include "helpers.h"
 
 #define FILENAME "Alumnos.bin"
@@ -34,6 +36,10 @@ int main(){
       }
       case 3:{
         readFromBin(FILENAME);
+        // Buffer buffer;
+        // buffer.read();
+
+
         break;
       }
       case 4:{

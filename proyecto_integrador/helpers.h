@@ -5,6 +5,10 @@
 #include <fstream>
 #include <string>
 
+// #include "Alumno.h"
+
+using namespace std;
+
 void toChar(string &s, char c[]){
     int len = s.length(), i;
     for(i = 0; i<len; ++i){
@@ -150,7 +154,7 @@ void readFromBin(string filename){
       fin.read( (char *) &interest, sizeof(bool));
       cout << interest << ", ";
     }
-    cout << endl;
+    cout << endl << endl;
   }
 
   fin.close();

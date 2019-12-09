@@ -1,5 +1,5 @@
-#ifndef INDICE_H
-#define INDICE_H
+#ifndef INDEX_H
+#define INDEX_H
 
 class Index{
 private:
@@ -8,16 +8,20 @@ private:
 
 public:
   Index();
+  /*
   Index(int ind, int ref);
   int getIndex();
   int getReference();
   void setIndex(int ind);
-  void setReference(int ref);
+  void setReference(int ref);*/
 };
 
 
-Index::Index(){}
-
+Index::Index(){
+  this->reference = -1;
+  this->index = -1;
+}
+/*
 Index::Index(int ind, int ref){
   this->index = ind;
   this->reference = ref;
@@ -38,5 +42,5 @@ void Index::setIndex(int ind){
 void Index::setReference(int ref){
   this->reference = ref;
 }
-
+*/
 #endif

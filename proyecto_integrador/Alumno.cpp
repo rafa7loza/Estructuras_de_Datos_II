@@ -2,6 +2,7 @@
 #include <string>
 
 #include "Alumno.h"
+// #include "Index.h"
 
 using namespace std;
 
