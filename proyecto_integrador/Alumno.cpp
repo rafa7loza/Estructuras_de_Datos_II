@@ -44,7 +44,23 @@ string Alumno::getEmailAddress(){
   return this->email;
 }
 
+string Alumno::getPassword(){
+  return this->password;
+}
+
 string Alumno::toString(){
   string s = to_string(this->pk) + ": " + this->names + " " + this->lastNames;
   return s;
+}
+
+int Alumno::getFriendsNum(){
+  return this->friends;
+}
+
+bool* Alumno::getArr(){
+  return *&this->interests;
+}
+
+int Alumno::getSize(){
+  return 7*sizeof(int) + this->names.length() + this->lastNames.length() + this->email.length() + this->password.length() + (10*sizeof(bool)) + sizeof(int);
 }

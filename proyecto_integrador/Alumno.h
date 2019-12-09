@@ -4,10 +4,10 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
+
 // Might change
 const int LEN_INTERESTS = 10;
-
-using namespace std;
 
 class Alumno{
 private:
@@ -21,6 +21,7 @@ private:
   bool interests[LEN_INTERESTS]={false};
 
 public:
+
   Alumno();
 
   // Setters
@@ -34,8 +35,13 @@ public:
   string getNames();
   string getLastNames();
   string getEmailAddress();
+  string getPassword();
+  int getFriendsNum();
+  bool* getArr();
 
+  // Aux methods
   string toString();
+  int getSize();
 };
 
 #endif
