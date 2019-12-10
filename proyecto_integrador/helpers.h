@@ -8,7 +8,7 @@
 #include "Alumno.h"
 
 using namespace std;
-
+/*
 void toChar(string &s, char c[]){
     int len = s.length(), i;
     for(i = 0; i<len; ++i){
@@ -16,7 +16,7 @@ void toChar(string &s, char c[]){
     }
     c[len] = '\0';
 }
-
+*/
 bool fileExists(string filename){
   ifstream file(filename.c_str());
   return file.good();
@@ -43,7 +43,7 @@ void setUser(Alumno &a, int key){
   getline(cin, aux);
   a.setPassword(aux);
 }
-
+/*
 void writeToBin(Alumno a, string filename){
 
   ofstream fout;
@@ -117,7 +117,7 @@ void writeToBin(Alumno a, string filename){
 
   fout.close();
 }
-
+*/
 void readFromBin(string filename){
   ifstream fin;
 

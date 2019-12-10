@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Alumno.h"
+#include "Loader.h"
 #include "Menu.h"
 #include "Buffer.h"
 #include "helpers.h"
@@ -14,6 +15,7 @@ int main(){
   int opt=0;
   Menu menu = Menu();
   Buffer buffer(FILENAME);
+  Loader loader(FILENAME);
   Alumno auxUser;
   Graph socialNetwork;
 
@@ -44,12 +46,14 @@ int main(){
         // buffer.read();
 
         // socialNetwork.printVertex();
-        Alumno* arr;
+
+        /*Alumno* arr;
         arr = socialNetwork.getUsers();
 
         for(int i=0; i<socialNetwork.getVertexCount(); ++i){
           cout << arr[i].toString() << endl;
-        }
+        }*/
+        readFromBin(FILENAME);
 
         break;
       }
@@ -57,6 +61,7 @@ int main(){
         break;
       }
       case 5:{
+        loader.graphToFile(socialNetwork);
         cout << "Saliendo del programa . . ." << endl;
         break;
       }
