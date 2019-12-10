@@ -6,21 +6,19 @@
 #include "Buffer.h"
 // #include "helpers.h"
 
-using namespace std;
-
-//Buffer::Buffer(){};
+// using namespace std;
 
 Buffer::Buffer(){}
 
 
 void Buffer::read(){
-  /*string filename = "Alumnos.bin";
+  string filename = "Alumnos.bin";
   // assert(fileExists(filename) == true);
 
   ifstream fin;
-  fin.open(filename, ios::bin);
+  fin.open(filename, ios::binary);
 
-  int fileSize, pk, reference;
+  int fileSize, pk, reference, objectSize;
 
   fin.seekg(0, ios::end);
   fileSize = (int)fin.tellg();
@@ -32,6 +30,6 @@ void Buffer::read(){
 
     cout << pk << " - " << objectSize << endl;
 
-    fin.seekg(objectSize);
-  }*/
+    fin.seekg((int)fin.tellg() + objectSize - sizeof(int));
+  }
 }

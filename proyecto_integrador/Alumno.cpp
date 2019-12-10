@@ -15,6 +15,7 @@ Alumno::Alumno(){
 
 void Alumno::setNames(string &s){
   this->names = s;
+  this->pk = ((int)s[0]*17)%113;
 }
 
 void Alumno::setLastNames(string &s){

@@ -5,7 +5,7 @@
 #include <fstream>
 #include <string>
 
-// #include "Alumno.h"
+#include "Alumno.h"
 
 using namespace std;
 

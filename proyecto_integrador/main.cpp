@@ -36,8 +36,8 @@ int main(){
       }
       case 3:{
         readFromBin(FILENAME);
-        // Buffer buffer;
-        // buffer.read();
+        Buffer buffer;
+        buffer.read();
 
 
         break;
