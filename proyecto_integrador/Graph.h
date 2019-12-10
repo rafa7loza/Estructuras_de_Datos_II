@@ -19,6 +19,8 @@ private:
 public:
   Graph();
   void addUser(Alumno value);
+  Alumno* getUsers();
+  int getVertexCount();
 
   void printVertex();
 };

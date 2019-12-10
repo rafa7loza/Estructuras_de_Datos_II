@@ -22,3 +22,7 @@ void Vertex::addNext(Alumno value){
 string Vertex::getData(){
   return this->value.toString();
 }
+
+Alumno Vertex::getValue(){
+  return this->value;
+}

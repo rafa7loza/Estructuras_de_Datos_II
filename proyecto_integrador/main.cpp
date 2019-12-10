@@ -28,10 +28,10 @@ int main(){
         setUser(auxUser, key);
         // cout << auxUser.toString() << endl;
 
-        writeToBin(auxUser, FILENAME);
-        cout << "User added to the file" << endl;
+        // writeToBin(auxUser, FILENAME);
+        // cout << "User added to the file" << endl;
         socialNetwork.addUser(auxUser);
-        cout << "User added to the Graph successfully ! " << endl;
+        // cout << "User added to the Graph successfully ! " << endl;
 
         break;
       }
@@ -39,12 +39,17 @@ int main(){
         break;
       }
       case 3:{
-        readFromBin(FILENAME);
+        // readFromBin(FILENAME);
         // buffer.printArray();
         // buffer.read();
 
-        socialNetwork.printVertex();
+        // socialNetwork.printVertex();
+        Alumno* arr;
+        arr = socialNetwork.getUsers();
 
+        for(int i=0; i<socialNetwork.getVertexCount(); ++i){
+          cout << arr[i].toString() << endl;
+        }
 
         break;
       }

@@ -1,0 +1,16 @@
+1
+Juan
+Perez Verdia
+juanes@correo.com
+123contraseña
+1
+Hector
+Ciprian Alvarez
+gamers@correo.com
+123contraseña
+1
+Alonso
+Guardado Hernandez
+naranja43@correo.com
+123contraseña
+3 5

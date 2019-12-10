@@ -27,6 +27,7 @@ public:
   void addNext(Alumno value);
 
   string getData();
+  Alumno getValue();
 
 };
 
