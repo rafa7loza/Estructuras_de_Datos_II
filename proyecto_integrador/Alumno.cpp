@@ -9,9 +9,12 @@ Alumno::Alumno(){
   // Use an auxiliary function to get a key that's is not used by another
   // user
   // key = assignKey();
-  this->pk = 1;
+  // this->pk = 1;
 }
 
+void Alumno::setPK(int key){
+    this->pk = key;
+}
 
 void Alumno::setNames(string &s){
   this->names = s;

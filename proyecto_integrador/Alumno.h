@@ -25,6 +25,7 @@ public:
   Alumno();
 
   // Setters
+  void setPK(int key);
   void setNames(string &s);
   void setLastNames(string &s);
   void setEmailAdrress(string &s);

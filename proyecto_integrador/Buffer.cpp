@@ -110,8 +110,10 @@ void Buffer::read(string filename){
 
 int Buffer::findValidKey(){
   for(int i=0; i<this->size; ++i){
-    if(this->indexArray[i].getIndex() == -1)
-      return i;
+    if(this->indexArray[i].getIndex() == -1){
+      this->indexArray[i].setIndex(i+1);
+      return i+1;
+    }
   }
   return -1;
 }

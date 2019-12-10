@@ -22,8 +22,9 @@ bool fileExists(string filename){
   return file.good();
 }
 
-void setUser(Alumno &a){
+void setUser(Alumno &a, int key){
   string aux;
+  a.setPK(key);
 
   cout << "Ingrese el nombre o los nombres del usuario: ";
   cin.ignore();
