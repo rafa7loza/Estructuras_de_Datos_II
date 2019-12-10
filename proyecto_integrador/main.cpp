@@ -3,13 +3,11 @@
 #include "Alumno.h"
 #include "Menu.h"
 #include "Buffer.h"
-// #include "Index.h"
 #include "helpers.h"
-
-#define FILENAME "Alumnos.bin"
 
 using namespace std;
 
+const string FILENAME = "Alumnos.bin";
 
 int main(){
   // Main auxiliary variables

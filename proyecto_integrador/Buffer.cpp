@@ -4,9 +4,6 @@
 #include <string>
 
 #include "Buffer.h"
-// #include "helpers.h"
-
-// using namespace std;
 
 Buffer::Buffer(){
   this->filename = "test.bin";
@@ -85,10 +82,10 @@ void Buffer::read(){
 }
 
 void Buffer::read(string filename){
-  // assert(fileExists(filename) == true);
-
   ifstream fin;
+
   fin.open(this->filename, ios::binary);
+  cout << "Reading file " << this->filename << " . . . " << endl;
 
   int fileSize, pk, reference, objectSize;
 
@@ -107,15 +104,13 @@ void Buffer::read(string filename){
   }
 
   // Sort the index array
-  // cout << "Size of the array: "<< this->size << endl;
   this->sort();
-  // cout << "Sorted is done ! !" << endl;
   isSorted = true;
 }
 
 int Buffer::findValidKey(){
   for(int i=0; i<this->size; ++i){
-    if(this->indexArray[i].getIndex() != -1)
+    if(this->indexArray[i].getIndex() == -1)
       return i;
   }
   return -1;
