@@ -24,13 +24,14 @@ int main(){
     switch (opt){
       case 1:{
         int key = buffer.findValidKey();
+        cout << "Valid key gefunden " << key << "! ! !" << endl;
         setUser(auxUser, key);
-        cout << auxUser.toString() << endl;
-        string s=auxUser.toString();
+        // cout << auxUser.toString() << endl;
 
         writeToBin(auxUser, FILENAME);
-
+        cout << "User added to the file" << endl;
         socialNetwork.addUser(auxUser);
+        cout << "User added to the Graph successfully ! " << endl;
 
         break;
       }
@@ -38,7 +39,7 @@ int main(){
         break;
       }
       case 3:{
-        // readFromBin(FILENAME);
+        readFromBin(FILENAME);
         // buffer.printArray();
         // buffer.read();
 

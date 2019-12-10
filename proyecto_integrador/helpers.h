@@ -98,14 +98,19 @@ void writeToBin(Alumno a, string filename){
   fout.write(c, lng+1);
 
   // Write the number of friends
-  n = a.getFriendsNum();
+  n = a.getFriendsCounter();
   fout.write( (char *) &n, sizeof(int));
+  int *frs;
+  frs = a.getFriends();
+  for(int i=0; i<n; ++i ){
+    fout.write( (char *) &frs[i], sizeof(int));
+  }
 
   // Write the boolean array
-  n = 10;
-  bool *arr;
-  arr = a.getArr();
+  n = a.getInterestsCounter();
   fout.write( (char *) &n, sizeof(int));
+  bool *arr;
+  arr = a.getInterests();
   for(int i=0; i<n; ++i){
     fout.write( (char *) &arr[i], sizeof(bool));
   }
@@ -119,7 +124,7 @@ void readFromBin(string filename){
   if(!fileExists(filename)) return;
   fin.open(filename, ios::binary);
 
-  int fileSize, objectSize, n, lng;
+  int fileSize, objectSize, n, lng, frs;
   string str;
   char *c;
   bool interest;
@@ -145,12 +150,18 @@ void readFromBin(string filename){
       cout << str << endl;
     }
 
-    // Read the number of friends
+    // Read the array of friends
     fin.read( (char *) &n, sizeof(int));
     cout << "Number of friends: " << n << endl;
+    for(int i=0; i<n; ++i){
+      fin.read( (char *) &frs, sizeof(int));
+      cout << frs << ", ";
+    }
+    cout << endl;
 
-    // Read the boolean array
+    // Read the array of interests
     fin.read( (char *) &n, sizeof(int));
+    cout << "Number of interests: " << n << endl;
     for(int i=0; i<n; ++i){
       fin.read( (char *) &interest, sizeof(bool));
       cout << interest << ", ";
@@ -160,11 +171,5 @@ void readFromBin(string filename){
 
   fin.close();
 }
-
-
-
-
-
-
 
 #endif

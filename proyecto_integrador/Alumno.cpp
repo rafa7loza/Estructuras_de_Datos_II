@@ -9,7 +9,7 @@ Alumno::Alumno(){
   // Use an auxiliary function to get a key that's is not used by another
   // user
   // key = assignKey();
-  // this->pk = 1;
+  this->pk = 1;
 }
 
 void Alumno::setPK(int key){
@@ -18,7 +18,6 @@ void Alumno::setPK(int key){
 
 void Alumno::setNames(string &s){
   this->names = s;
-  this->pk = ((int)s[0]*17)%113;
 }
 
 void Alumno::setLastNames(string &s){
@@ -58,14 +57,24 @@ string Alumno::toString(){
   return s;
 }
 
-int Alumno::getFriendsNum(){
-  return this->friends;
+int Alumno::getFriendsCounter(){
+  return this->friendsCounter;
 }
 
-bool* Alumno::getArr(){
+int* Alumno::getFriends(){
+    return *&this->friends;
+}
+
+int Alumno::getInterestsCounter(){
+  return this->interestsCounter;
+}
+
+bool* Alumno::getInterests(){
   return *&this->interests;
 }
 
 int Alumno::getSize(){
-  return 7*sizeof(int) + this->names.length() + this->lastNames.length() + this->email.length() + this->password.length() + (10*sizeof(bool)) + sizeof(int);
+  // 8 is the number of bytes that tells me the size of the strings and arrays
+  // including the pk
+  return 8*sizeof(int) + this->names.length() + this->lastNames.length() + this->email.length() + this->password.length() + (this->interestsCounter*sizeof(bool)) + (this->friendsCounter*sizeof(int));
 }

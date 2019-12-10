@@ -109,13 +109,18 @@ void Buffer::read(string filename){
 }
 
 int Buffer::findValidKey(){
+  // It is known that there cannot be repeated keys,
+  // keys are actually 1-based index from the indexArray
+  this->sort();
+  // int maxKey = this->indexArray[this->size-1].getIndex();
   for(int i=0; i<this->size; ++i){
-    if(this->indexArray[i].getIndex() == -1){
-      this->indexArray[i].setIndex(i+1);
-      return i+1;
+    if(this->indexArray[i].getIndex() != (i+1)){
+      this->indexArray[this->size++].setIndex(this->size);
+      return this->size;
     }
   }
-  return -1;
+  this->indexArray[this->size++].setIndex(this->size);
+  return this->size;
 }
 
 Index Buffer::getIndexArray(){
