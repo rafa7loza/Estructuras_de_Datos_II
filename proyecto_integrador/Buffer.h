@@ -1,7 +1,7 @@
 #ifndef BUFFER_H
 #define BUFFER_H
 
-// #include "Index.h"
+#include "Index.h"
 
 const int SZ = 1e3;
 
