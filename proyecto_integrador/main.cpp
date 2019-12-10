@@ -15,6 +15,7 @@ int main(){
   // Main auxiliary variables
   int opt=0;
   Menu menu = Menu();
+  Buffer buffer(FILENAME);
   Alumno auxUser;
 
   do{
@@ -36,8 +37,8 @@ int main(){
       }
       case 3:{
         readFromBin(FILENAME);
-        Buffer buffer;
-        buffer.read();
+        buffer.printArray();
+        // buffer.read();
 
 
         break;

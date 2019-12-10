@@ -10,16 +10,35 @@ using namespace std;
 const int SZ = 1e3;
 
 class Buffer{
-  //friend class Index;
 private:
-  Index indexArray[100];
+  Index indexArray[SZ];
   int size=0;
+  string filename;
+
+  // helpers
+  bool isSorted;
+
+  // Private methods
+  void sort();
+  void merge(int left, int right, int m);
+  void mergeSort(int left, int right);
 
 public:
+  // Constructors
   Buffer();
-  //Buffer(string filename);
-  // void readFromFile(string filename);
+  Buffer(string file);
+
+  // Getters
+  string getFilename();
+  Index getIndexArray();
+
   void read();
+  void read(string filename);
+
+  int findValidKey();
+  void printArray();
+
+
 };
 
 #endif

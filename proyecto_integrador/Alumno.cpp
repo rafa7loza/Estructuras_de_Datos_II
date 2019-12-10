@@ -2,7 +2,6 @@
 #include <string>
 
 #include "Alumno.h"
-// #include "Index.h"
 
 using namespace std;
 
@@ -12,6 +11,7 @@ Alumno::Alumno(){
   // key = assignKey();
   this->pk = 1;
 }
+
 
 void Alumno::setNames(string &s){
   this->names = s;
