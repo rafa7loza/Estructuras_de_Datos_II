@@ -78,3 +78,11 @@ int Alumno::getSize(){
   // including the pk
   return 8*sizeof(int) + this->names.length() + this->lastNames.length() + this->email.length() + this->password.length() + (this->interestsCounter*sizeof(bool)) + (this->friendsCounter*sizeof(int));
 }
+
+void Alumno::addFriend(int friendKey){
+  this->friends[this->friendsCounter++] = friendKey;
+}
+
+void Alumno::addInterest(int key){
+  this->interests[key] = true;
+}

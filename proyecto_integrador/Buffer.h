@@ -30,7 +30,8 @@ public:
 
   // Getters
   string getFilename();
-  Index getIndexArray();
+  Index* getIndexArray();
+  int getArraySize();
 
   void read();
   void read(string filename);

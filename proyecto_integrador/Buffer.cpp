@@ -97,7 +97,7 @@ void Buffer::read(string filename){
     fin.read( (char *) &objectSize, sizeof(int));
     fin.read( (char *) &pk, sizeof(int));
 
-    cout << pk << " - " << objectSize << endl;
+    // cout << pk << " - " << objectSize << " deb   . . " << endl;
     this->indexArray[this->size++] = Index(pk, objectSize);
 
     fin.seekg((int)fin.tellg() + objectSize - sizeof(int));
@@ -123,8 +123,8 @@ int Buffer::findValidKey(){
   return this->size;
 }
 
-Index Buffer::getIndexArray(){
-  return *this->indexArray;
+Index* Buffer::getIndexArray(){
+  return *&this->indexArray;
 }
 
 void Buffer::printArray(){
@@ -133,4 +133,8 @@ void Buffer::printArray(){
     cout << "Pk: " << this->indexArray[i].getIndex() <<
       ": " << this->indexArray[i].getReference() << endl;
   }
+}
+
+int Buffer::getArraySize(){
+  return this->size;
 }

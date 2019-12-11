@@ -8,6 +8,8 @@ using namespace std;
 
 // Might change
 const int MAX = 1e5;
+// const int intesrest;
+const int LEN = 10;
 
 class Alumno{
 private:
@@ -22,8 +24,8 @@ private:
   int friendsCounter=0;
 
   // Interests are stored in an bool array
-  bool interests[MAX]={false};
-  int interestsCounter=0;
+  bool interests[LEN]={false};
+  int interestsCounter=LEN;
 
 public:
 
@@ -50,6 +52,8 @@ public:
   // Aux methods
   string toString();
   int getSize();
+  void addFriend(int friendKey);
+  void addInterest(int key);
 };
 
 #endif
