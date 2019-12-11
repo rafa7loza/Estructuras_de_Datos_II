@@ -28,6 +28,8 @@ public:
 
   string getData();
   Alumno getValue();
+  Alumno *getValuePtr();
+
 
 };
 

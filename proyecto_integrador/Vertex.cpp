@@ -26,3 +26,7 @@ string Vertex::getData(){
 Alumno Vertex::getValue(){
   return this->value;
 }
+
+Alumno* Vertex::getValuePtr(){
+  return &this->value;
+}
