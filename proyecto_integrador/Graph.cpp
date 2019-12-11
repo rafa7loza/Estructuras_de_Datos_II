@@ -58,16 +58,36 @@ Alumno* Graph::findUser(int pk){
   return nullptr;
 }
 
+Vertex* Graph::findVertex(int key){
+  if(this->source == nullptr) return nullptr;
+
+  Vertex* aux = this->source;
+
+  while(aux->hasNext()){
+    if(aux->getValue().getPK() == key) return aux;
+    aux = aux->next();
+  }
+  return nullptr;
+}
+
+void Graph::makeFriendRequest(int fromUser, int toUser){
+  Vertex* from = findVertex(fromUser);
+  Vertex* to = findVertex(toUser);
+  from->addEdge(to);
+}
+
+
 // For debugging the progamm
 
 void Graph::printVertex(){
   if(this->source == nullptr) return ;
 
-  Vertex* aux = this->source;
-  while(aux->hasNext()){
-    cout << aux->getData() << endl;
-    // cout << aux->hasNext() << endl;
-    aux = aux->next();
+  Vertex* auxVertex = this->source;
+  while(auxVertex->hasNext()){
+    cout << auxVertex->getData() << endl << endl;
+    auxVertex->printEdges();
+    auxVertex = auxVertex->next();
   }
-  cout << aux->getData() << endl;
+  cout << auxVertex->getData() << endl;
+  auxVertex->printEdges();
 }

@@ -16,13 +16,17 @@ private:
   Vertex* source;
   int vertexCounter;
 
+  Vertex* findVertex(int key);
 public:
   Graph();
   void addUser(Alumno value);
   Alumno* getUsers();
   int getVertexCount();
   Alumno* findUser(int pk);
+
+  void makeFriendRequest(int fromUser, int toUser);
   // void updateUser()
+
 
   void printVertex();
 };

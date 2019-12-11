@@ -29,7 +29,8 @@ public:
   string getData();
   Alumno getValue();
   Alumno *getValuePtr();
-
+  void addEdge(Vertex* v);
+  void printEdges();
 
 };
 

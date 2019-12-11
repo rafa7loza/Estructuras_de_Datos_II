@@ -10,6 +10,10 @@ using namespace std;
 
 const string FILENAME = "Alumnos.bin";
 
+void modifyUser(Menu m, Alumno* currentUser);
+void showFriends(Alumno* currentUser, Graph network);
+void sendFriendRequest(int currentUserKey, Graph &network);
+
 int main(){
   // Main auxiliary variables
   int opt=0;
@@ -39,7 +43,7 @@ int main(){
       }
       case 2:{
         // Find the user by primary Key
-        int userOption, pk, auxOption;
+        int userOption, pk;
         string changeAttr;
         Alumno *currentUser;
 
@@ -55,52 +59,22 @@ int main(){
         cout << currentUser->toString() << endl;
         menu.accessUser();
         cin >> userOption;
-        // cin.ignore();
 
         switch (userOption) {
           case 1:{
-            menu.modifyUser();
-            cin >> auxOption;
-            switch (auxOption) {
-              case 1:{
-                cout << "Ingrese el nuevo nombre: ";
-                cin.ignore();
-                getline(cin, changeAttr);
-                currentUser->setNames(changeAttr);
-                break;
-              }
-              case 2:{
-                cout << "Ingrese los nuevos apellidos: ";
-                cin.ignore();
-                getline(cin, changeAttr);
-                currentUser->setLastNames(changeAttr);
-                break;
-              }
-              case 3:{
-                cout << "Ingrese el nuevo correo: ";
-                cin.ignore();
-                getline(cin, changeAttr);
-                currentUser->setEmailAdrress(changeAttr);
-                break;
-              }
-              case 4: {
-                cout << "Ingrese la nueva contraseña: ";
-                cin.ignore();
-                getline(cin, changeAttr);
-                currentUser->setPassword(changeAttr);
-                break;
-              }
-              default: {
-                cout << "Opción inválida . . ."<< endl << endl;
-                break;
-              }
-            }
+            modifyUser(menu, currentUser);
             cout << currentUser->toString() << endl;
             break;
           }
           case 2:{
+            showFriends(currentUser, socialNetwork);
             break;
-          }default:{
+          }
+          case 3:{
+            sendFriendRequest(currentUser->getPK(), socialNetwork);
+            break;
+          }
+          default:{
             cout << "Opción inválida . . ."<< endl << endl;
             break;
           }
@@ -122,6 +96,8 @@ int main(){
         }
         // readFromBin(FILENAME);
 
+        socialNetwork.printVertex();
+
         break;
       }
       case 4:{
@@ -138,4 +114,85 @@ int main(){
       }
     }
   }while(opt != 5);
+}
+
+
+void modifyUser(Menu m, Alumno* currentUser){
+  m.modifyUser();
+  int auxOption;
+  string changeAttr;
+  cin >> auxOption;
+  switch (auxOption) {
+    case 1:{
+      cout << "Ingrese el nuevo nombre: ";
+      cin.ignore();
+      getline(cin, changeAttr);
+      currentUser->setNames(changeAttr);
+      break;
+    }
+    case 2:{
+      cout << "Ingrese los nuevos apellidos: ";
+      cin.ignore();
+      getline(cin, changeAttr);
+      currentUser->setLastNames(changeAttr);
+      break;
+    }
+    case 3:{
+      cout << "Ingrese el nuevo correo: ";
+      cin.ignore();
+      getline(cin, changeAttr);
+      currentUser->setEmailAdrress(changeAttr);
+      break;
+    }
+    case 4: {
+      cout << "Ingrese la nueva contraseña: ";
+      cin.ignore();
+      getline(cin, changeAttr);
+      currentUser->setPassword(changeAttr);
+      break;
+    }
+    default: {
+      cout << "Opción inválida . . ."<< endl << endl;
+      break;
+    }
+  }
+}
+
+void showFriends(Alumno* currentUser, Graph network){
+  int n = currentUser->getFriendsCounter();
+  if(n == 0){
+    cout << "El usuario no tiene amigos :(" << endl;
+  }else{
+    int *friends;
+    friends = new int[n];
+    friends = currentUser->getFriends();
+    for(int i=0; i<n; ++i){
+      Alumno* user;
+      user = network.findUser(friends[i]);
+      cout << user->toString() << endl;
+    }
+  }
+}
+
+void sendFriendRequest(int currentUserKey, Graph &network){
+  int userKey;
+  Alumno *user;
+
+  cout << "Ingrese el identidicador del usuario: ";
+  cin >> userKey;
+
+  user = network.findUser(userKey);
+
+  // validate if they are already friends
+  // bool areFriends(Alumno a, Alumno b)
+
+  if(user == nullptr){
+    cout << "No se encontró el identidicador del usuario. "<< endl;
+    return;
+  }
+
+  user->addRequest(currentUserKey);
+  network.makeFriendRequest(currentUserKey, userKey);
+
+  cout << "Se ha enviado la solicitud correctamente. " << endl;
 }
