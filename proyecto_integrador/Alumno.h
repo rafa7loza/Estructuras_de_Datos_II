@@ -63,8 +63,10 @@ public:
   // Aux methods
   string toString();
   int getSize();
+
   void addFriend(int friendKey);
   void addInterest(int key);
+  void addRequest(int key);
 
 };
 

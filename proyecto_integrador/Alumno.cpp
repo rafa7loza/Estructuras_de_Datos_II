@@ -6,9 +6,6 @@
 using namespace std;
 
 Alumno::Alumno(){
-  // Use an auxiliary function to get a key that's is not used by another
-  // user
-  // key = assignKey();
   this->pk = 1;
 }
 
@@ -97,6 +94,10 @@ int Alumno::getSize(){
 
 void Alumno::addFriend(int friendKey){
   this->friends[this->friendsCounter++] = friendKey;
+}
+
+void Alumno::addRequest(int key){
+  this->requests[this->requestsCounter++] = key;
 }
 
 void Alumno::addInterest(int key){
