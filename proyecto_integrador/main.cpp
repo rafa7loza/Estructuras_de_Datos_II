@@ -19,6 +19,9 @@ int main(){
   Alumno auxUser;
   Graph socialNetwork;
 
+  loader.fileToGraph(socialNetwork, buffer);
+  cout << socialNetwork.getVertexCount()<< endl;
+
   do{
     menu.mainMenu();
     cin >> opt;
@@ -47,13 +50,13 @@ int main(){
 
         // socialNetwork.printVertex();
 
-        /*Alumno* arr;
+        Alumno* arr;
         arr = socialNetwork.getUsers();
 
         for(int i=0; i<socialNetwork.getVertexCount(); ++i){
           cout << arr[i].toString() << endl;
-        }*/
-        readFromBin(FILENAME);
+        }
+        // readFromBin(FILENAME);
 
         break;
       }
