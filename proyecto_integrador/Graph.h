@@ -18,7 +18,7 @@ private:
 
   Vertex* findVertex(int key);
   void addFriends(Vertex* currentVertex, Alumno value);
-  
+
 public:
   Graph();
   void addUser(Alumno value);
@@ -27,6 +27,7 @@ public:
   Alumno* findUser(int pk);
 
   void makeFriendRequest(int fromUser, int toUser);
+  void makeFriends(int fromUser, int toUser);
   // void updateUser()
 
 

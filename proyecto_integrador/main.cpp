@@ -13,6 +13,7 @@ const string FILENAME = "Alumnos.bin";
 void modifyUser(Menu m, Alumno* currentUser);
 void showFriends(Alumno* currentUser, Graph network);
 void showRequests(Alumno *currentUser, Graph network);
+void handleRequests(Alumno *currentUser, Graph &network);
 void sendFriendRequest(int currentUserKey, Graph &network);
 
 int main(){
@@ -80,6 +81,7 @@ int main(){
           }
           case 5:{
             showRequests(currentUser, socialNetwork);
+            handleRequests(currentUser, socialNetwork);
             break;
           }
           default:{
@@ -95,13 +97,13 @@ int main(){
         // buffer.read();
 
         // socialNetwork.printVertex();
-
+/*
         Alumno* arr;
         arr = socialNetwork.getUsers();
 
         for(int i=0; i<socialNetwork.getVertexCount(); ++i){
           cout << arr[i].toString() << endl;
-        }
+        }*/
         // readFromBin(FILENAME);
 
         socialNetwork.printVertex();
@@ -197,6 +199,25 @@ void showRequests(Alumno *currentUser, Graph network){
         << " te ha enviado una solicitud de amistad. " << endl;
     }
   }
+}
+void handleRequests(Alumno *currentUser, Graph &network){
+  string opt;
+  int id;
+  cout << "\nPara aceptar o eliminar una solicitud escriba el comando " << endl
+  << "\tPara aceptar: <id_de_la_solicitud> no" << endl
+  << "\tPara eliminar: <id_de_la_solicitud> si" << endl;
+  do{
+    cin >> id >> opt;
+    // TO DO: validate the id
+    // delete Edge
+    currentUser->removeRequest(id);
+    if(opt == "si"){
+      currentUser->addFriend(id);
+      Alumno* otherUser = network.findUser(id);
+      otherUser->addFriend(currentUser->getPK());
+    }
+    cout << "solicitud procesada correctamente. " << endl;
+  }while(currentUser->getRequestsCounter() > 0);
 }
 
 void sendFriendRequest(int currentUserKey, Graph &network){

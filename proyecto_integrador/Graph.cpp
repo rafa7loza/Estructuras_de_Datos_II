@@ -93,6 +93,12 @@ void Graph::makeFriendRequest(int fromUser, int toUser){
   from->addEdge(to);
 }
 
+void Graph::makeFriends(int fromUser, int toUser){
+  Vertex* from = findVertex(fromUser);
+  Vertex* to = findVertex(toUser);
+  from->addEdge(to);
+  to->addEdge(from);
+}
 
 // For debugging the progamm
 
@@ -101,8 +107,9 @@ void Graph::printVertex(){
 
   Vertex* auxVertex = this->source;
   while(auxVertex->hasNext()){
-    cout << auxVertex->getData() << endl << endl;
+    cout << auxVertex->getData() << endl;
     auxVertex->printEdges();
+    cout << endl;
     auxVertex = auxVertex->next();
   }
   cout << auxVertex->getData() << endl;
