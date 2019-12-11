@@ -17,6 +17,8 @@ private:
   int vertexCounter;
 
   Vertex* findVertex(int key);
+  void addFriends(Vertex* currentVertex, Alumno value);
+  
 public:
   Graph();
   void addUser(Alumno value);

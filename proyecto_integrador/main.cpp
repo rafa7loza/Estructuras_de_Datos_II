@@ -12,6 +12,7 @@ const string FILENAME = "Alumnos.bin";
 
 void modifyUser(Menu m, Alumno* currentUser);
 void showFriends(Alumno* currentUser, Graph network);
+void showRequests(Alumno *currentUser, Graph network);
 void sendFriendRequest(int currentUserKey, Graph &network);
 
 int main(){
@@ -72,6 +73,13 @@ int main(){
           }
           case 3:{
             sendFriendRequest(currentUser->getPK(), socialNetwork);
+            break;
+          }
+          case 4:{
+            break;
+          }
+          case 5:{
+            showRequests(currentUser, socialNetwork);
             break;
           }
           default:{
@@ -170,6 +178,23 @@ void showFriends(Alumno* currentUser, Graph network){
       Alumno* user;
       user = network.findUser(friends[i]);
       cout << user->toString() << endl;
+    }
+  }
+}
+
+void showRequests(Alumno *currentUser, Graph network){
+  int n = currentUser->getRequestsCounter();
+  if(n==0){
+    cout << "No hay solicitudes de amistad." << endl;
+  }else{
+    int *requests;
+    requests = new int[n];
+    requests = currentUser->getRequests();
+    for(int i=0; i<n; ++i){
+      Alumno* user;
+      user = network.findUser(requests[i]);
+      cout << "El usuario " << user->toString()
+        << " te ha enviado una solicitud de amistad. " << endl;
     }
   }
 }

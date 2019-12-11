@@ -12,15 +12,32 @@ int Graph::getVertexCount(){
 }
 
 void Graph::addUser(Alumno value){
-  if(this->source == nullptr) this->source = new Vertex(value);
+  if(this->source == nullptr) {
+    this->source = new Vertex(value);
+    addFriends(this->source, value);
+  }
   else{
     Vertex* aux = this->source;
     while(aux->hasNext()){
       aux = aux->next();
     }
     aux->addNext(value);
+    addFriends(aux->next(), value);
   }
   ++vertexCounter;
+}
+
+void Graph::addFriends(Vertex* currentVertex, Alumno value){
+  int n = value.getFriendsCounter();
+  if(n > 0){
+    int *friends;
+    friends = new int[n];
+    for(int i=0; i<n; ++i){
+      Vertex* thatVertex = findVertex(friends[i]);
+      thatVertex->addEdge(currentVertex);
+      currentVertex->addEdge(thatVertex);
+    }
+  }
 }
 
 Alumno* Graph::getUsers(){
