@@ -29,11 +29,8 @@ int main(){
     switch (opt){
       case 1:{
         int key = buffer.findValidKey();
-        cout << "Valid key gefunden " << key << "! ! !" << endl;
+        // cout << "Valid key gefunden " << key << "! ! !" << endl;
         setUser(auxUser, key);
-        // cout << auxUser.toString() << endl;
-
-        // writeToBin(auxUser, FILENAME);
         // cout << "User added to the file" << endl;
         socialNetwork.addUser(auxUser);
         // cout << "User added to the Graph successfully ! " << endl;
@@ -41,6 +38,73 @@ int main(){
         break;
       }
       case 2:{
+        // Find the user by primary Key
+        int userOption, pk, auxOption;
+        string changeAttr;
+        Alumno *currentUser;
+
+        cout << "Ingrese la llave primaria del usuario: ";
+        cin >> pk;
+        currentUser = socialNetwork.findUser(pk);
+
+        if(currentUser == nullptr){
+          cout << "No existen usuarios en la red con ese identificador . . ." << endl;
+          continue;
+        }
+
+        cout << currentUser->toString() << endl;
+        menu.accessUser();
+        cin >> userOption;
+        // cin.ignore();
+
+        switch (userOption) {
+          case 1:{
+            menu.modifyUser();
+            cin >> auxOption;
+            switch (auxOption) {
+              case 1:{
+                cout << "Ingrese el nuevo nombre: ";
+                cin.ignore();
+                getline(cin, changeAttr);
+                currentUser->setNames(changeAttr);
+                break;
+              }
+              case 2:{
+                cout << "Ingrese los nuevos apellidos: ";
+                cin.ignore();
+                getline(cin, changeAttr);
+                currentUser->setLastNames(changeAttr);
+                break;
+              }
+              case 3:{
+                cout << "Ingrese el nuevo correo: ";
+                cin.ignore();
+                getline(cin, changeAttr);
+                currentUser->setEmailAdrress(changeAttr);
+                break;
+              }
+              case 4: {
+                cout << "Ingrese la nueva contraseña: ";
+                cin.ignore();
+                getline(cin, changeAttr);
+                currentUser->setPassword(changeAttr);
+                break;
+              }
+              default: {
+                cout << "Opción inválida . . ."<< endl << endl;
+                break;
+              }
+            }
+            cout << currentUser->toString() << endl;
+            break;
+          }
+          case 2:{
+            break;
+          }default:{
+            cout << "Opción inválida . . ."<< endl << endl;
+            break;
+          }
+        }
         break;
       }
       case 3:{

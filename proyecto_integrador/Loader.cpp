@@ -174,7 +174,6 @@ void Loader::fileToGraph(Graph &g, Buffer buffer){
   // cout << size << endl;
 
   for(int i=0; i<size; ++i){
-    Index current = indexArray[i];
     cout << "Position in file: " << pos << endl;
     // cout << indexArray[i].getIndex() << " - " << indexArray[i].getReference() << endl;
     read(pos, alumno);

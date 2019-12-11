@@ -40,7 +40,8 @@ void Menu::accessUser(){
    << "3) Agregar amigo." << endl
    << "4) Eliminar amigo." << endl
    << "5) Ver solicitudes de amistad." << endl
-   << "6) Eliminar cuenta." << endl << endl
+   << "6) Eliminar cuenta." << endl
+   << "7) Agregar/Eliminar intereses." << endl << endl
    << "Seleccione una opción: ";
 }
 
@@ -53,6 +54,11 @@ void Menu::friendRequests(){
 void Menu::modifyUser(){
   // Modificacion de usuarios listando sus atributos
   // Queda pendiente para cuando estén definidos sus atributos
+  cout << "1) Cambiar nombres." << endl
+    << "2) Cambiar Apellidos. " << endl
+    << "3) Cambiar correo." << endl
+    << "4) Cambiar contraseña." << endl << endl
+    << "Seleccione una opción: ";
 }
 
 #endif

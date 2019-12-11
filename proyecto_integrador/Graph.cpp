@@ -41,6 +41,22 @@ Alumno* Graph::getUsers(){
   return *&arr;
 }
 
+Alumno* Graph::findUser(int pk){
+  if(this->source == nullptr) return nullptr;
+
+  // Alumno arr[MAX];
+  Vertex* aux = this->source;
+
+  while(aux->hasNext()){
+    // Alumno a = aux->getData();
+    if(aux->getValue().getPK() == pk){
+      Alumno *a = aux->getValuePtr();
+      return a;
+    }
+    aux = aux->next();
+  }
+  return nullptr;
+}
 
 // For debugging the progamm
 

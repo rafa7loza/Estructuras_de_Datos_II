@@ -21,6 +21,8 @@ public:
   void addUser(Alumno value);
   Alumno* getUsers();
   int getVertexCount();
+  Alumno* findUser(int pk);
+  // void updateUser()
 
   void printVertex();
 };
