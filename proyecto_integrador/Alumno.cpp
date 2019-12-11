@@ -65,6 +65,22 @@ int* Alumno::getFriends(){
     return *&this->friends;
 }
 
+void Alumno::removeFriend(int key){
+  int index;
+  for(int i=0; i<this->friendsCounter; ++i){
+    if(this->friends[i]) == key){
+      this->friends[i] = 0;
+      index = i;
+      break;
+    }
+  }
+  --this->friendsCounter;
+  for(int i=index; i<this->friendsCounter; ++i){
+    this->friends[index] = this->friends[index];
+    this->friends[index] = 0;
+  }
+}
+
 int Alumno::getInterestsCounter(){
   return this->interestsCounter;
 }
@@ -85,4 +101,28 @@ void Alumno::addFriend(int friendKey){
 
 void Alumno::addInterest(int key){
   this->interests[key] = true;
+}
+
+int* Alumno::getRequests(){
+    return *&this->requests;
+}
+
+int Alumno::getRequestsCounter(){
+  return this->requestsCounter;
+}
+
+void Alumno::removeRequest(int key){
+  int index;
+  for(int i=0; i<this->requestsCounter; ++i){
+    if(this->requests[i]) == key){
+      this->requests[i] = 0;
+      index = i;
+      break;
+    }
+  }
+  --this->requestsCounter;
+  for(int i=index; i<this->requestsCounter; ++i){
+    this->requests[index] = this->requests[index];
+    this->requests[index] = 0;
+  }
 }

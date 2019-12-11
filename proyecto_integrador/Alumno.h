@@ -7,7 +7,7 @@
 using namespace std;
 
 // Might change
-const int MAX = 1e5;
+const int MAX = 1e2;
 // const int intesrest;
 const int LEN = 10;
 
@@ -27,6 +27,10 @@ private:
   bool interests[LEN]={false};
   int interestsCounter=LEN;
 
+  // Array that stores all the requests
+  int requests[MAX]={0};
+  int requestsCounter=0;
+
 public:
 
   Alumno();
@@ -44,16 +48,24 @@ public:
   string getLastNames();
   string getEmailAddress();
   string getPassword();
+
   int* getFriends();
   int getFriendsCounter();
+  void removeFriend(int key);
+
   bool* getInterests();
   int getInterestsCounter();
+
+  int* getRequests();
+  int getRequestsCounter();
+  void removeRequest(int key);
 
   // Aux methods
   string toString();
   int getSize();
   void addFriend(int friendKey);
   void addInterest(int key);
+
 };
 
 #endif
