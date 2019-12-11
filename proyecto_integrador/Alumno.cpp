@@ -63,9 +63,9 @@ int* Alumno::getFriends(){
 }
 
 void Alumno::removeFriend(int key){
-  int index;
+  int index=0;
   for(int i=0; i<this->friendsCounter; ++i){
-    if(this->friends[i]) == key){
+    if(this->friends[i] == key){
       this->friends[i] = 0;
       index = i;
       break;
@@ -113,9 +113,9 @@ int Alumno::getRequestsCounter(){
 }
 
 void Alumno::removeRequest(int key){
-  int index;
+  int index=0;
   for(int i=0; i<this->requestsCounter; ++i){
-    if(this->requests[i]) == key){
+    if(this->requests[i] == key){
       this->requests[i] = 0;
       index = i;
       break;
