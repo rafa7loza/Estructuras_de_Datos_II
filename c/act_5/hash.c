@@ -24,13 +24,15 @@ void hash_init(struct Hash * hptr){
 void hash_load(int fd, int size, struct Hash * hptr){
   int fsize = get_file_size(fd), key;
   char bfr[BUF_SIZE];
+  int bfsize = sizeof(bfr);
+
   lseek(fd, 0, SEEK_SET);
 
   while(lseek(fd, 0, SEEK_CUR) < fsize){
-    read(fd, &bfr, size);
+    read(fd, &bfr, bfsize);
     key = hash_function(bfr);
     while( hptr->regs[ key ] != -1) key += 1 % REGISTERS_SIZE;
-    hptr->regs[ key ] = lseek(fd, 0, SEEK_CUR) - size;
+    hptr->regs[ key ] = lseek(fd, size, SEEK_CUR) - bfsize;
   }
 }
 
