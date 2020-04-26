@@ -84,6 +84,7 @@ void hash_load(int fd, int size, struct Hash * hptr){
   while(lseek(fd, 0, SEEK_CUR) < fsize){
     read(fd, &bfr, size);
     key = hash_function(bfr);
+    while( hptr->regs[ key ] != -1) key += 1 % REGISTERS_SIZE; 
     hptr->regs[ key ] = lseek(fd, 0, SEEK_CUR) - size;
   }
 
