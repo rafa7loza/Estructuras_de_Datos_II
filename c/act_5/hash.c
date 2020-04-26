@@ -32,7 +32,7 @@ void hash_load(int fd, int size, struct Hash * hptr){
     read(fd, &bfr, bfsize);
     key = hash_function(bfr);
     while( hptr->regs[ key ] != -1) key += 1 % REGISTERS_SIZE;
-    hptr->regs[ key ] = lseek(fd, size, SEEK_CUR) - bfsize;
+    hptr->regs[ key ] = lseek(fd, size - bfsize, SEEK_CUR) - size;
   }
 }
 

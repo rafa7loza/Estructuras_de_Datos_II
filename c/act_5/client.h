@@ -12,4 +12,5 @@ struct Client{
   char date[DATE];          // dd/mm/yyyy
 };
 
-void fill_client(struct Client * cl);
+void fill_client(struct Client * clptr);
+void print_client(struct Client * clptr);

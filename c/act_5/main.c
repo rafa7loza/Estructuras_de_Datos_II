@@ -12,6 +12,7 @@ Profesor:     Guerrero Segura Ramirez Miguel Angel
 #include "hash.h"
 
 // Define functions
+void menu();
 int init_file();
 void add_register(int fd, struct Client * clptr, struct Hash * hptr);
 void find_register(int fd, struct Hash * hptr, struct Client * clptr);
@@ -28,8 +29,8 @@ extern void print_used(struct Hash * hptr);
 extern void hash_insert(struct Hash * hptr, char * bfr, int pfile);
 extern int hash_find(int fd, char * bfr, struct Hash * hptr, struct Client * clptr);
 
-
-void menu();
+// Import functions from client.h
+extern void print_client(struct Client * clptr);
 
 int main(){
 
@@ -64,7 +65,7 @@ int main(){
       }
       case EXIT: break;
       default: {
-        printf("Ingreso una opcion invalida, intente de nuevo.");
+        printf("\nIngreso una opcion invalida, intente de nuevo.\n");
         break;
       }
     }
@@ -102,7 +103,9 @@ void find_register(int fd, struct Hash * hptr, struct Client * clptr){
   printf("Ingrese el registro que desea buscar: ");
   get_str(buf, BUF_SIZE);
   if( hash_find(fd, buf, hptr, clptr) == 1 )
-    debug(clptr->last_name_a);
+    print_client(clptr);
+    // debug(clptr->last_name_a);
+
 
 }
 
@@ -111,13 +114,3 @@ void menu(){
     INSERT, FIND, EXIT);
   printf("\nIngrese la accion que desea realizar: ");
 }
-
-
-/*
-
-TO DO
-
-CREATE FULL STRUCTURE CLIENTS
-AND ITS CORRESPONDINGS METHODS
-
-*/
