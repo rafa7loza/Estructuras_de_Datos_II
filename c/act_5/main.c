@@ -9,27 +9,38 @@ Profesor:     Guerrero Segura Ramirez Miguel Angel
 
 ********************/
 
-
-#include <stdio.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <string.h>
 
 #include "hash.h"
-// #include "client.h"
-#include "helper.h"
-#include "constants.h"
 
 // Define functions
 int init_file();
 void add_register(int fd, struct Client * clptr, struct Hash * hptr);
-
-void fill_client(struct Client * cl);
 void find_register(int fd, struct Hash * hptr, struct Client * clptr);
+
+// void fill_client(struct Client * cl);
+
+// Import functions from helper.h
+extern int str_equals(char *a, char *b);
+extern int len(char *arr);
+extern void get_str(char * arr, int bufferSize);
+extern void concat(char *a, char *b);
+extern int open_file(char *str);
+extern int get_file_size(int fd);
+
+// import functions from hash.h
+// extern int hash_function(char * bfr);
+extern void hash_init(struct Hash * hptr);
+extern void hash_load(int fd, int size, struct Hash * hptr);
+extern void print_used(struct Hash * hptr);
+extern void hash_insert(struct Hash * hptr, char * bfr, int pfile);
+extern int hash_find(int fd, char * bfr, struct Hash * hptr, struct Client * clptr);
+
 
 void menu();
 
@@ -106,13 +117,24 @@ void find_register(int fd, struct Hash * hptr, struct Client * clptr){
     debug(clptr->last_name_a);
 
 }
-void fill_client(struct Client * cl){
-  printf("Ingrese el apellido paterno: ");
-  get_str(cl->last_name_a, BUF_SIZE);
-}
+
+// void fill_client(struct Client * cl){
+//   printf("Ingrese el apellido paterno: ");
+//   get_str(cl->last_name_a, BUF_SIZE);
+// }
 
 void menu(){
   printf("\n%c) Ingresar un registro.\n%c) Buscar registro por llave.\n%c) Salir.",
     INSERT, FIND, EXIT);
   printf("\nIngrese la accion que desea realizar: ");
 }
+
+
+/*
+
+TO DO
+
+CREATE FULL STRUCTURE CLIENTS
+AND ITS CORRESPONDINGS METHODS
+
+*/

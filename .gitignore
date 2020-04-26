@@ -1,6 +1,7 @@
 .DS_Store
 *.dat
-test
 *.pdf
 *.tex
 *.png
+test
+out

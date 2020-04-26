@@ -7,3 +7,4 @@
 #define EXIT '3'
 
 /* Hash header constants */
+#define REGISTERS_SIZE 100
