@@ -41,6 +41,25 @@ int open_file(char *str){
     S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 }
 
+int create_filled_file(char * str, int size_in_bytes){
+  char ch = '~';
+  int fd = open(str,
+    // Flags
+    O_RDWR | O_CREAT,
+    // Permisions
+    S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+
+  while(size_in_bytes--)
+    write(fd, &ch, 1);
+
+  return fd;
+}
+
+int file_exists(char * str){
+  struct stat st;
+  return lstat(str, &st);
+}
+
 int get_file_size(int fd){
   return lseek(fd, 0, SEEK_END) - lseek(fd, 0, SEEK_SET);
 }
