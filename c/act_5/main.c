@@ -21,12 +21,14 @@ void find_register(int fd, struct Hash * hptr, struct Client * clptr);
 extern void get_str(char * arr, int bufferSize);
 extern void concat(char *a, char *b);
 extern int open_file(char *str);
+extern int create_filled_file(char * str, int size_in_bytes);
+
 
 // import functions from hash.h
 extern void hash_init(struct Hash * hptr);
 extern void hash_load(int fd, int size, struct Hash * hptr);
 extern void print_used(struct Hash * hptr);
-extern void hash_insert(struct Hash * hptr, char * bfr, int pfile);
+extern void hash_insert(int fd, char * bfr, int csize);
 extern int hash_find(int fd, char * bfr, struct Hash * hptr, struct Client * clptr);
 
 // Import functions from client.h
@@ -40,13 +42,13 @@ int main(){
   struct Client client;
   struct Hash hash;
 
-  hash_init(&hash);
-
   fd = init_file();
 
-  hash_load(fd, sizeof(struct Client), &hash);
+  // hash_load(fd, sizeof(struct Client), &hash);
+  // hash_init(&hash);
+
   // debug("### Hoola");
-  print_used(&hash);
+  // print_used(&hash);
 
 
   do{
@@ -77,24 +79,28 @@ int main(){
 
 int init_file(){
   char file_name[BUF_SIZE];
+  int fsize = sizeof(struct Client) * REGISTERS_SIZE;
+  printf("Tamaño del archivo: %d Bytes\n", fsize);
 
   printf("\t¡Bienvenido al programa !\n\nIngrese el nombre del archivo con el que desea trabajar: ");
   get_str(file_name, BUF_SIZE);
   concat(file_name, EXTENSION);
 
-  return open_file(file_name);
+  if(file_exists(file_name) != -1)
+    return open_file(file_name);
+  else
+    return create_filled_file(file_name, fsize);
 }
 
 void add_register(int fd, struct Client * clptr, struct Hash * hptr){
 
-  int cpos, size = sizeof(struct Client);
-  cpos = lseek(fd, 0, SEEK_END);
+  int size = sizeof(struct Client);
 
   fill_client(clptr);
-  hash_insert(hptr, clptr->last_name_a, cpos);
+  hash_insert(fd, clptr->last_name_a, size);
   write(fd, clptr, size);
 
-  print_used(hptr);
+  // print_used(hptr);
 }
 
 void find_register(int fd, struct Hash * hptr, struct Client * clptr){
@@ -103,7 +109,8 @@ void find_register(int fd, struct Hash * hptr, struct Client * clptr){
   printf("Ingrese el registro que desea buscar: ");
   get_str(buf, BUF_SIZE);
   if( hash_find(fd, buf, hptr, clptr) == 1 )
-    print_client(clptr);
+    printf("\n");
+    // print_client(clptr);
     // debug(clptr->last_name_a);
 
 

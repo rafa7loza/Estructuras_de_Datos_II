@@ -5,6 +5,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include "constants.h"
+
 #define debug(str) printf("Debug: ** %s **\n", str)
 #define clean while ((getchar()) != '\n')
 

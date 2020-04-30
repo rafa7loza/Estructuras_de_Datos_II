@@ -42,7 +42,7 @@ int open_file(char *str){
 }
 
 int create_filled_file(char * str, int size_in_bytes){
-  char ch = '~';
+  char ch = FILL;
   int fd = open(str,
     // Flags
     O_RDWR | O_CREAT,

@@ -1,8 +1,11 @@
 #include "hash.h"
+// #include "constants.h"
 
 static char a = 'a';
 
 int hash_function(char * bfr){
+  // Transformar forma canonica
+  // to_lower()
   const int p = 53;
   int i=0;
   long long value = 0, p_pow = 1;
@@ -38,40 +41,55 @@ void hash_load(int fd, int size, struct Hash * hptr){
 
 int hash_find(int fd, char * bfr, struct Hash * hptr, struct Client * clptr){
   int key = hash_function(bfr), size = sizeof(struct Client);
+  int fpos = key * size;
+  int fsize = size * REGISTERS_SIZE;
+  char aux;
 
-  if( hptr->regs[ key ] == -1){
+  // fpos += size;
+  lseek(fd, fpos, SEEK_SET);
+  read(fd, &aux, sizeof(char));
+  printf("%c\n", aux);
+
+  if( aux == FILL ){
     printf("No se encuentra algun registro con esa llave\n");
     return 0;
   }
 
-  printf("Key = %d, position in file = %d\n", key, hptr->regs[ key ]);
   do{
-    lseek(fd, hptr->regs[ key ], SEEK_SET);
+    printf("Key = %d, position in file = %d\n", key, fpos);
+    lseek(fd, fpos, SEEK_SET);
     read(fd, clptr, size);
-    ++key;
-  }while( str_equals(clptr->last_name_a, bfr) != 1 );
+    if(str_equals(clptr->last_name_a, bfr) != 1)
+      break;
+    print_client(clptr);
+    fpos += size % fsize; 
+  }while(fpos <= fsize);
 
   return 1;
 
 }
 
-void hash_insert(struct Hash * hptr, char * bfr, int pfile){
+void hash_insert(int fd, char * bfr, int csize){
 
-  if( hptr->used_regs > REGISTERS_SIZE ){
-    printf("Error: Ya no hay mas espacio en la memoria\n");
-    return ;
-  }
+  // Add assertion whether registers can be added to the file
+  // if( hptr->used_regs > REGISTERS_SIZE ){
+  //   printf("Error: Ya no hay mas espacio en la memoria\n");
+  //   return ;
+  // }
 
+  char aux;
   int key = hash_function(bfr);
+  printf("key %d\n", key);
+  int fpos = csize * key;
 
-  if( hptr->regs[ key ] == -1 ){
-    hptr->regs[ key ] = pfile;
-    return ;
-  }
+  do{
+    printf("Position in file: %d\n", fpos);
+    lseek(fd, fpos, SEEK_SET);
+    read(fd, &aux, sizeof(char));
+    fpos += csize;
+  }while(aux != FILL);
+  lseek(fd, -1, SEEK_CUR);
 
-  do{ key += 1 % REGISTERS_SIZE; }while( hptr->regs[ key ] != -1);
-
-  hptr->regs[ key ] = pfile;
 }
 
 void print_used(struct Hash * hptr){
