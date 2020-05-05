@@ -22,6 +22,7 @@ extern void get_str(char * arr, int bufferSize);
 extern void concat(char *a, char *b);
 extern int open_file(char *str);
 extern int create_filled_file(char * str, int size_in_bytes);
+extern int file_exists(char * str);
 
 
 // import functions from hash.h

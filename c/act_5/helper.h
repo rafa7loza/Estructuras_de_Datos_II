@@ -17,3 +17,5 @@ void concat(char *a, char *b);
 int open_file(char *str);
 int get_file_size(int fd);
 int create_filled_file(char * str, int size_in_bytes);
+char * to_lower(char *str);
+int file_exists(char * str);

@@ -19,7 +19,11 @@ void get_str(char * arr, int bufferSize){
     ++index;
   }
 
-  if(index < bufferSize-1) arr[index] = '\0';
+
+  if(index < bufferSize){
+    while(index < bufferSize)
+      arr[index++] = '\0';
+  }
   else arr[bufferSize-1] = '\0';
 }
 
@@ -74,4 +78,21 @@ int str_equals(char *a, char *b){
   }
 
   return 1;
+}
+
+char * to_lower(char *str){
+  int i=0, length = len(str);
+  char *result = malloc(sizeof(char)*length);
+
+  while(str[i] != '\0'){
+    if((int)str[i] >= 65 && (int)str[i] <= 90){
+      int x = str[i] + 32;
+      result[i] = (char)x;
+    }else
+      result[i] = str[i];
+    ++i;
+  }
+  result[i] = '\0';
+
+  return result;
 }

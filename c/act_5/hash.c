@@ -1,17 +1,18 @@
 #include "hash.h"
 // #include "constants.h"
 
+extern char * to_lower(char *str);
+
 static char a = 'a';
 
 int hash_function(char * bfr){
-  // Transformar forma canonica
-  // to_lower()
+  char * str = to_lower(bfr);
   const int p = 53;
   int i=0;
   long long value = 0, p_pow = 1;
 
-  while(bfr[i] != '\0'){
-    value = (value + (bfr[i++] - a + 1 ) * p_pow ) % REGISTERS_SIZE;
+  while(str[i] != '\0'){
+    value = (value + (str[i++] - a + 1 ) * p_pow ) % REGISTERS_SIZE;
     p_pow = (p * p_pow) % REGISTERS_SIZE;
   }
 
@@ -40,7 +41,8 @@ void hash_load(int fd, int size, struct Hash * hptr){
 }
 
 int hash_find(int fd, char * bfr, struct Hash * hptr, struct Client * clptr){
-  int key = hash_function(bfr), size = sizeof(struct Client);
+  char * str = to_lower(bfr);
+  int key = hash_function(str), size = sizeof(struct Client);
   int fpos = key * size;
   int fsize = size * REGISTERS_SIZE;
   char aux;
@@ -56,13 +58,13 @@ int hash_find(int fd, char * bfr, struct Hash * hptr, struct Client * clptr){
   }
 
   do{
-    printf("Key = %d, position in file = %d\n", key, fpos);
     lseek(fd, fpos, SEEK_SET);
     read(fd, clptr, size);
-    if(str_equals(clptr->last_name_a, bfr) != 1)
+    if(str_equals(to_lower(clptr->last_name_a), to_lower(bfr)) != 1)
       break;
+    printf("Key = %d, position in file = %d\n", key, fpos);
     print_client(clptr);
-    fpos += size % fsize; 
+    fpos += size % fsize;
   }while(fpos <= fsize);
 
   return 1;
@@ -72,10 +74,6 @@ int hash_find(int fd, char * bfr, struct Hash * hptr, struct Client * clptr){
 void hash_insert(int fd, char * bfr, int csize){
 
   // Add assertion whether registers can be added to the file
-  // if( hptr->used_regs > REGISTERS_SIZE ){
-  //   printf("Error: Ya no hay mas espacio en la memoria\n");
-  //   return ;
-  // }
 
   char aux;
   int key = hash_function(bfr);
