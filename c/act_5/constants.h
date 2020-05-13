@@ -7,7 +7,7 @@
 #define FILL 45
 
 /* Hash header constants */
-#define REGISTERS_SIZE 100
+#define REGISTERS_SIZE 51
 
 /* Client header constants */
 #define AGE 4
