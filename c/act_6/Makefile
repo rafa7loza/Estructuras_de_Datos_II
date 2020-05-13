@@ -12,5 +12,4 @@ compile:
 	@${CC} ${CFLAGS} -o ${TARGET} ${SRC}
 
 unit_test:
-	echo "${subst src\/main.c, src\/test.c, ${SRC}}"
-	${CC} ${CFLAGS} -o ${TEST} ${subst src/main.c, test.c, ${SRC}}
+	@${CC} ${CFLAGS} -o ${TEST} ${subst src/main.c, test.c, ${SRC}}

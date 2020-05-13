@@ -27,10 +27,10 @@ extern int file_exists(char * str);
 
 // import functions from hash.h
 extern void hash_init(struct Hash * hptr);
-extern void hash_load(int fd, int size, struct Hash * hptr);
 extern void print_used(struct Hash * hptr);
 extern void hash_insert(int fd, char * bfr, int csize);
 extern int hash_find(int fd, char * bfr, struct Hash * hptr, struct Client * clptr);
+extern int create_file(char * file_name, int strsize);
 
 // Import functions from client.h
 extern void print_client(struct Client * clptr);
@@ -44,12 +44,6 @@ int main(){
   struct Hash hash;
 
   fd = init_file();
-
-  // hash_load(fd, sizeof(struct Client), &hash);
-  // hash_init(&hash);
-
-  // debug("### Hoola");
-  // print_used(&hash);
 
 
   do{

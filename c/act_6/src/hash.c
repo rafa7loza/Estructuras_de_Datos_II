@@ -1,5 +1,4 @@
 #include "hash.h"
-// #include "constants.h"
 
 extern char * to_lower(char *str);
 
@@ -23,21 +22,6 @@ void hash_init(struct Hash * hptr){
   for(int i=0; i<REGISTERS_SIZE; ++i)
     hptr->regs[i] = -1;
   hptr->used_regs = 0;
-}
-
-void hash_load(int fd, int size, struct Hash * hptr){
-  int fsize = get_file_size(fd), key;
-  char bfr[BUF_SIZE];
-  int bfsize = sizeof(bfr);
-
-  lseek(fd, 0, SEEK_SET);
-
-  while(lseek(fd, 0, SEEK_CUR) < fsize){
-    read(fd, &bfr, bfsize);
-    key = hash_function(bfr);
-    while( hptr->regs[ key ] != -1) key += 1 % REGISTERS_SIZE;
-    hptr->regs[ key ] = lseek(fd, size - bfsize, SEEK_CUR) - size;
-  }
 }
 
 int hash_find(int fd, char * bfr, struct Hash * hptr, struct Client * clptr){
@@ -94,4 +78,28 @@ void print_used(struct Hash * hptr){
   for(int i=0; i<REGISTERS_SIZE; ++i)
     if( hptr->regs[i] != -1 )
       printf("{ Hash key: %d, Position in file: %d }\n", i, hptr->regs[i]);
+}
+
+int create_file(char * file_name, int strsize){
+  char ch = FILL;
+  unsigned short initval = 0;
+
+  int fd = open(file_name,
+    // Flags
+    O_RDWR | O_CREAT,
+    // Permisions
+    S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+
+  char * bfr;
+  bfr = (char *) malloc(sizeof(char) * strsize);
+  memset(bfr, ch, strsize);
+
+  lseek(fd, 0, SEEK_SET);
+
+  for(int i=0; i<REGISTERS_SIZE; ++i){
+    write(fd, &initval, sizeof(unsigned short));
+    write(fd, bfr, strsize);
+  }
+
+  return fd;
 }
