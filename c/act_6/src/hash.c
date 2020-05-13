@@ -18,13 +18,7 @@ int hash_function(char * bfr){
   return value;
 }
 
-void hash_init(struct Hash * hptr){
-  for(int i=0; i<REGISTERS_SIZE; ++i)
-    hptr->regs[i] = -1;
-  hptr->used_regs = 0;
-}
-
-int hash_find(int fd, char * bfr, struct Hash * hptr, struct Client * clptr){
+int hash_find(int fd, char * bfr, struct Client * clptr){
   char * str = to_lower(bfr);
   int key = hash_function(str), size = sizeof(struct Client);
   int fpos = key * size;
@@ -55,30 +49,32 @@ int hash_find(int fd, char * bfr, struct Hash * hptr, struct Client * clptr){
 
 }
 
-void hash_insert(int fd, char * bfr, int csize){
+void map_fpos(int fd, char * bfr, int csize){
 
   // Add assertion whether registers can be added to the file
 
-  char aux;
+  unsigned short times;
   int key = hash_function(bfr);
-  printf("key %d\n", key);
-  int fpos = csize * key;
+  int fpos = key * ((csize * CONTAINER) + sizeof(unsigned short));
+  printf("{key: %d, Position: %d}\n", key, fpos);
 
-  do{
-    printf("Position in file: %d\n", fpos);
-    lseek(fd, fpos, SEEK_SET);
-    read(fd, &aux, sizeof(char));
-    fpos += csize;
-  }while(aux != FILL);
-  lseek(fd, -1, SEEK_CUR);
+  lseek(fd, fpos, SEEK_SET);
+  read(fd, &times, sizeof(unsigned short));
+  assert(times < 3);
+  // printf("%d registros en el compartimento.\n", times);
+  // printf("Position: %lld\n", lseek(fd, 0, SEEK_CUR));
+  // Update the number of registes
+  lseek(fd, -sizeof(unsigned short), SEEK_CUR);
+  // printf("Position: %lld\n", lseek(fd, 0, SEEK_CUR));
+  ++times;
+  write(fd, &times, sizeof(unsigned short));
+
+  // assert(times < 3);
+  // printf("Insertion position is: %lld\n", lseek(fd, 0, SEEK_CUR));
+  lseek(fd, times*csize, SEEK_CUR);
 
 }
 
-void print_used(struct Hash * hptr){
-  for(int i=0; i<REGISTERS_SIZE; ++i)
-    if( hptr->regs[i] != -1 )
-      printf("{ Hash key: %d, Position in file: %d }\n", i, hptr->regs[i]);
-}
 
 int create_file(char * file_name, int strsize){
   char ch = FILL;
@@ -91,14 +87,16 @@ int create_file(char * file_name, int strsize){
     S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 
   char * bfr;
-  bfr = (char *) malloc(sizeof(char) * strsize);
-  memset(bfr, ch, strsize);
+  int total_len = CONTAINER * strsize;
+  printf("Structure is %d bytes length (%d).\n", strsize, total_len);
+  bfr = (char *) malloc(sizeof(char) * total_len);
+  memset(bfr, ch, total_len);
 
   lseek(fd, 0, SEEK_SET);
 
   for(int i=0; i<REGISTERS_SIZE; ++i){
     write(fd, &initval, sizeof(unsigned short));
-    write(fd, bfr, strsize);
+    write(fd, bfr, total_len);
   }
 
   return fd;
