@@ -37,14 +37,18 @@ int main(){
 
   printf("Ingrese el numero de registros: ");
   get_str(bfr, N);
-  // clean
   regs = atoi(bfr);
 
   while(regs--){
-    printf("%d\n", regs);
+    // printf("%d\n", regs);
     add_register(fd, &client);
 
   }
+
+  printf("Ingrese la llave primaria: ");
+  get_str(bfr, N);
+  hash_find(fd, bfr, &client);
+
   return 0;
 }
 

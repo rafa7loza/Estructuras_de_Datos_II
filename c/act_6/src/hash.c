@@ -20,38 +20,28 @@ int hash_function(char * bfr){
 
 int hash_find(int fd, char * bfr, struct Client * clptr){
   char * str = to_lower(bfr);
+  unsigned short cnt, i;
   int key = hash_function(str), size = sizeof(struct Client);
-  int fpos = key * size;
-  int fsize = size * REGISTERS_SIZE;
-  char aux;
+  int fpos = key * ((size * CONTAINER) + sizeof(unsigned short));
 
-  // fpos += size;
   lseek(fd, fpos, SEEK_SET);
-  read(fd, &aux, sizeof(char));
-  printf("%c\n", aux);
+  read(fd, &cnt, sizeof(unsigned short));
 
-  if( aux == FILL ){
+  if( cnt == 0 ){
     printf("No se encuentra algun registro con esa llave\n");
     return 0;
   }
 
-  do{
-    lseek(fd, fpos, SEEK_SET);
+  for(i=0; i<cnt; ++i){
     read(fd, clptr, size);
-    if(str_equals(to_lower(clptr->last_name_a), to_lower(bfr)) != 1)
-      break;
-    printf("Key = %d, position in file = %d\n", key, fpos);
     print_client(clptr);
-    fpos += size % fsize;
-  }while(fpos <= fsize);
+  }
 
   return 1;
 
 }
 
 void map_fpos(int fd, char * bfr, int csize){
-
-  // Add assertion whether registers can be added to the file
 
   unsigned short times;
   int key = hash_function(bfr);
@@ -60,18 +50,17 @@ void map_fpos(int fd, char * bfr, int csize){
 
   lseek(fd, fpos, SEEK_SET);
   read(fd, &times, sizeof(unsigned short));
-  assert(times < 3);
-  // printf("%d registros en el compartimento.\n", times);
-  // printf("Position: %lld\n", lseek(fd, 0, SEEK_CUR));
+  assert(times >= 0 && times < 3);
+
+  printf("%d registros en el compartimento.\n", times);
+
   // Update the number of registes
   lseek(fd, -sizeof(unsigned short), SEEK_CUR);
-  // printf("Position: %lld\n", lseek(fd, 0, SEEK_CUR));
   ++times;
   write(fd, &times, sizeof(unsigned short));
 
-  // assert(times < 3);
-  // printf("Insertion position is: %lld\n", lseek(fd, 0, SEEK_CUR));
-  lseek(fd, times*csize, SEEK_CUR);
+  // Locate cursor in the position to write
+  lseek(fd, (times-1)*csize, SEEK_CUR);
 
 }
 

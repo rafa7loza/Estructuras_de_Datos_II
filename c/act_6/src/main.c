@@ -43,7 +43,7 @@ int main(){
   struct Client client;
 
   fd = init_file();
-
+  printf("Tamaño del archivo: %d Bytes\n", get_file_size(fd));
 
   do{
     menu();
@@ -73,8 +73,7 @@ int main(){
 
 int init_file(){
   char file_name[BUF_SIZE];
-  int fsize = sizeof(struct Client) * REGISTERS_SIZE;
-  printf("Tamaño del archivo: %d Bytes\n", fsize);
+  int size = sizeof(struct Client);
 
   printf("\t¡Bienvenido al programa !\n\nIngrese el nombre del archivo con el que desea trabajar: ");
   get_str(file_name, BUF_SIZE);
@@ -83,7 +82,7 @@ int init_file(){
   if(file_exists(file_name) != -1)
     return open_file(file_name);
   else
-    return create_file(file_name, fsize);
+    return create_file(file_name, size);
 }
 
 void add_register(int fd, struct Client * clptr){
