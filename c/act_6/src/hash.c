@@ -22,21 +22,36 @@ int hash_find(int fd, char * bfr, struct Client * clptr){
   char * str = to_lower(bfr);
   unsigned short cnt, i;
   int key = hash_function(str), size = sizeof(struct Client);
-  int fpos = key * ((size * CONTAINER) + sizeof(unsigned short));
+  int fpos;
+  int curKey = key;
+  int flg = 1;
+  // clptr = NULL;
 
-  lseek(fd, fpos, SEEK_SET);
-  read(fd, &cnt, sizeof(unsigned short));
+  do{
+    fpos = curKey * ((size * CONTAINER) + sizeof(unsigned short));
+    lseek(fd, fpos, SEEK_SET);
+    read(fd, &cnt, sizeof(unsigned short));
 
-  if( cnt == 0 ){
+    // printf("Clientes: %d\n", cnt);
+    if( cnt ){
+      for(i=0; i<cnt; ++i){
+        read(fd, clptr, size);
+        // printf("a: %d, b: %d\n", hash_function(clptr->last_name_a), key);
+        if( str_equals(to_lower(clptr->last_name_a), to_lower(bfr)) ){
+          flg = 0;
+          print_client(clptr);
+        }
+        // printf("Position in file.%ld\n", lseek(fd, 0, SEEK_CUR));
+      }
+    }
+    curKey = (curKey+1)%REGISTERS_SIZE;
+
+  }while(cnt && curKey != key);
+
+  if(flg){
     printf("No se encuentra algun registro con esa llave\n");
     return 0;
   }
-
-  for(i=0; i<cnt; ++i){
-    read(fd, clptr, size);
-    print_client(clptr);
-  }
-
   return 1;
 
 }
@@ -50,12 +65,24 @@ void map_fpos(int fd, char * bfr, int csize){
 
   lseek(fd, fpos, SEEK_SET);
   read(fd, &times, sizeof(unsigned short));
-  assert(times >= 0 && times < 3);
+  lseek(fd, -sizeof(unsigned short), SEEK_CUR);
+
+  // assert(times >= 0 && times < 3);
+  if(times > 2){
+    int initialPos = key;
+    do{
+      initialPos = (initialPos+1) % REGISTERS_SIZE;
+      fpos = initialPos * ((csize * CONTAINER) + sizeof(unsigned short));
+      printf("{key: %d, Position: %d}\n", initialPos, fpos);
+      lseek(fd, fpos, SEEK_SET);
+      read(fd, &times, sizeof(unsigned short));
+      lseek(fd, -sizeof(unsigned short), SEEK_CUR);
+    }while(times > 2);
+  }
 
   printf("%d registros en el compartimento.\n", times);
 
   // Update the number of registes
-  lseek(fd, -sizeof(unsigned short), SEEK_CUR);
   ++times;
   write(fd, &times, sizeof(unsigned short));
 

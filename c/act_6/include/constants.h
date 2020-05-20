@@ -7,7 +7,7 @@
 #define FILL 45
 
 /* Hash header constants */
-#define REGISTERS_SIZE 51
+#define REGISTERS_SIZE 50
 #define CONTAINER 3
 
 /* Client header constants */
